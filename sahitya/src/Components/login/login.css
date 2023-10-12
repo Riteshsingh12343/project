@@ -1,0 +1,52 @@
+
+
+.Container{
+    width: 400px;
+    margin: auto;
+    box-shadow: 2px 5px 10px 5px rgb(0 0 0/ 0.6);
+}
+.img{
+    width: 50%;
+    margin:auto;
+    display: flex;
+    padding: 50px 0 0 ;
+}
+.Wrapper{
+    padding: 25px 35px;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    &> div, & > button , & > p {
+        margin-top: 20px;
+    }
+}
+.Typography {
+    text-align: center;
+    color: #878787;
+   
+}
+.error{
+    font-size: 10px;
+    color: #ff6161;
+    line-height: 0;
+    margin-top: 10px;
+    font-weight: 600;
+}
+.LoginButton:hover{
+
+    text-transform: none;
+    
+    color: #fff;
+    height: 48px;
+    border-radius: 2px;
+}
+
+
+.SigninButton{
+    text-transform: none;
+ background: #fff;
+ color: #2874f0;
+ height: 48px;
+ border-radius: 2px;
+ box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.837);
+}

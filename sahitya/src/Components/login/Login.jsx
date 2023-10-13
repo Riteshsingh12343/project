@@ -1,12 +1,67 @@
 import React from 'react';
 import { useState , useContext} from 'react';
-import { Box, TextField, Button, Typography, } from '@mui/material';
+import {  TextField, Box, Button, Typography, styled } from '@mui/material';
 import logo from '../assets/logo.png'
-import css from './login.css';
 import { API } from '../../service/api';
 import { DataContext } from '../../context/DataProvider';
 
 import { useNavigate } from 'react-router-dom';
+
+//metarial ui  start
+const Component = styled(Box)`
+    width: 400px;
+    margin: auto;
+    box-shadow:  0 2px 4px 0 rgba(0, 0, 0, 0.837);
+`;
+
+const Image = styled('img')({
+    width: 120,
+    display: 'flex',
+    margin: 'auto',
+    padding: '50px 0 0'
+});
+
+const Wrapper = styled(Box)`
+    padding: 25px 35px;
+    display: flex;
+    flex: 1;
+    overflow: auto;
+    flex-direction: column;
+    & > div, & > button, & > p {
+        margin-top: 20px;
+    }
+`;
+
+const LoginButton = styled(Button)`
+    text-transform: none;
+    background: #FB641B;
+    color: #fff;
+    height: 48px;
+    border-radius: 2px;
+`;
+
+const SignupButton = styled(Button)`
+    text-transform: none;
+    background: #fff;
+    color: #2874f0;
+    height: 48px;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
+`;
+
+const Text = styled(Typography)`
+    color: #878787;
+    font-size: 12px;
+`;
+
+const Error = styled(Typography)`
+    font-size: 10px;
+    color: #ff6161;
+    line-height: 0;
+    margin-top: 10px;
+    font-weight: 600;
+`
+// closed
 
 
 const loginInitialValues = {
@@ -20,7 +75,7 @@ const signupInitialValues = {
   password: '',
 };
 
-const Login = () => {
+const Login = ({isUserAuthenticated}) => {
   const [account, toggleAccount] = useState('login');
   const [signup, setSignup] = useState(signupInitialValues);
   const [login, setLogin] = useState(loginInitialValues);
@@ -62,7 +117,7 @@ const Login = () => {
    
 
     setAccount({ name: response.data.name, username: response.data.username });
-
+      isUserAuthenticated(true);
     navigate('/');
     
    }else{
@@ -70,33 +125,37 @@ const Login = () => {
    }
   }
   return (
+<Component>
+     <Box  >
+          <Image src={logo} alt="login" />
+          {
+            account === 'login' ?
 
-    <Box className="Container" >
-      <img className='img' src={logo} alt="login" />
-      {
-        account === 'login' ?
-          <Box className='Wrapper'>
-            <TextField variant="standard"value={login.username} onChange={(e) => onValueChange(e)} name='username' label='Enter Username' />
-            <TextField variant="standard" value={login.password} onChange={(e) => onValueChange (e)} name='password' label='Enter Password' />
+              <Wrapper >
+                <TextField variant="standard"value={login.username} onChange={(e) => onValueChange(e)} name='username' label='Enter Username' />
+                <TextField variant="standard" value={login.password} onChange={(e) => onValueChange (e)} name='password' label='Enter Password' />
 
-            { error && <Typography className='error'>(error)</Typography>}
-            
-            <Button className='LoginButton ' variant="contained" onClick={()=> loginUser()} >Login</Button >
-            <Typography className='Typography' style={{ textAlign: 'center' }}>OR</Typography>
-            <Button className='SigninButton' onClick={() => toggleSignup()} style={{ marginBottom: 50 }}>Create an account</Button>
-          </Box>
-          :
-          <Box className="Wrapper">
-            <TextField variant="standard" onChange={(e) => onInputChange(e)} name='name' label="Enter Name " />
-            <TextField variant="standard" onChange={(e) => onInputChange(e)} name='username' label= "Enter Username" />
-            <TextField variant="standard" onChange={(e) => onInputChange(e)} name='password' label="Enter Password" />
-              { error && <Typography className='error'>(error)</Typography>}
-            <Button className='SigninButton' onClick={() => signupUser()} >Signup</Button>
-            <Typography className='Typography' style={{ textAlign: 'center' }}>OR</Typography>
-            <Button className='LoginButton ' variant="contained" onClick={() => toggleSignup()}>Already have an account</Button >
-          </Box >
-      }
-    </Box>
+                {error && <Error>{error}</Error>}   
+
+                <LoginButton  variant="contained" onClick={()=> loginUser()} >Login</LoginButton >
+                <Text style={{ textAlign: 'center' }}>OR</Text>
+                <SignupButton onClick={() => toggleSignup()} style={{ marginBottom: 50 }}>Create an account</SignupButton>
+              </Wrapper>
+              :
+              <Wrapper className="Wrapper">
+                <TextField variant="standard" onChange={(e) => onInputChange(e)} name='name' label="Enter Name " />
+                <TextField variant="standard" onChange={(e) => onInputChange(e)} name='username' label= "Enter Username" />
+                <TextField variant="standard" onChange={(e) => onInputChange(e)} name='password' label="Enter Password" />
+
+                {error && <Error>{error}</Error>}
+
+                <SignupButton onClick={() => signupUser()} >Signup</SignupButton>
+                <Text style={{ textAlign: 'center' }}>OR</Text>
+                <LoginButton  variant="contained" onClick={() => toggleSignup()}>Already have an account</LoginButton >
+              </Wrapper >
+           }
+         </Box>
+    </Component>
 
   )
 }

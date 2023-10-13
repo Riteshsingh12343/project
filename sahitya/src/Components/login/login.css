@@ -3,7 +3,7 @@
 .Container{
     width: 400px;
     margin: auto;
-    box-shadow: 2px 5px 10px 5px rgb(0 0 0/ 0.6);
+    box-shadow: 2px 5px 10px 5px #fd0303;
 }
 .img{
     width: 50%;
@@ -22,7 +22,7 @@
 }
 .Typography {
     text-align: center;
-    color: #878787;
+    color:rgba(224, 224, 224 ,1);
    
 }
 .error{

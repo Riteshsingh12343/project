@@ -2,9 +2,10 @@ import React from 'react'
 
 
 import { Button , Table, TableHead, TableBody, TableRow, TableCell ,  styled} from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { categories } from '../../constance/data';
 
+// ////////css components ////////////////////////
 const StyledTable = styled(Table)`
     border: 1px solid rgba(224, 224, 224, 1);
 `;
@@ -16,25 +17,42 @@ const StyledButton = styled(Button)`
     text-decoration: none;
 `;
 
+const StyledLink = styled(Link)`
+ text-decoration: none;
+ color: inherit ;
+`
+
+/////////////////////////////////////
+
 
 const Categories = () => {
+
+  const [searchParams] =useSearchParams(); //purpose searchparem use
+  const category = searchParams.get('category');
+
   return (
     <>
-    <StyledButton variant='contained'> Create Blog</StyledButton>
-    <StyledTable>
-        <TableHead>
-            <TableRow>
-              <TableCell>
-                 All Categories
-              </TableCell>
-            </TableRow>
-        </TableHead>
-        <TableBody>
+        <StyledLink to = {`/create?category=${category || ''}`} >
+           <StyledButton variant='contained'> Create Blog</StyledButton>
+        </StyledLink>
+        <StyledTable>
+            <TableHead>
+                <TableRow>
+                  <TableCell>
+                    <StyledLink to='/'>
+                        All Categories
+                    </StyledLink>
+                  </TableCell>
+                </TableRow>
+            </TableHead>
+            <TableBody>
             {
                  categories.map(category => (
                     <TableRow key={category.id}>
                         <TableCell>
-                                {category.type}
+                          <StyledLink to={`/?category=${category.type}`}>
+                              {category.type}
+                          </StyledLink>  
                         </TableCell>
                     </TableRow>
                  ))
